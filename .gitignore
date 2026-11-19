@@ -1,0 +1,7 @@
+venv/
+.env
+__pycache__/
+data/*.csv
+data/*.zip
+data/*.gz
+eval_results.json
