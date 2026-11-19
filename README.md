@@ -2,7 +2,7 @@
 
 Chat with Edinburgh Airbnb data. Ask what guests say (RAG over 25,000 reviews) or ask for numbers (text-to-pandas over 6,342 listings). A small intent router picks the right engine for each question.
 
-**Live demo:** https://YOUR-APP-NAME.streamlit.app  *(replace with your Streamlit Community Cloud link)*
+**Live demo:** https://airbnb-explorer-rag-and-data-analysis.streamlit.app/ 
 
 ![Home screen with example questions](screenshots/home.jpeg)
 
@@ -46,6 +46,16 @@ flowchart TD
     E --> O[LLM summarises result]
     O --> UI2[Answer + table + chart + code]
 ```
+## Dataset
+
+**Source:** [Inside Airbnb](https://insideairbnb.com/get-the-data), Edinburgh, Scotland (public Airbnb listing data, one snapshot). Downloaded `listings.csv` and `reviews.csv`, then cleaned them with `build_data.py`.
+
+| Table | Rows used | Key columns |
+|---|---|---|
+| Listings | 6,342 | neighbourhood, room_type, property_type, price, accommodates, bedrooms, number_of_reviews, review_scores (rating, cleanliness, location, value), host_is_superhost, availability_365 |
+| Reviews | 25,000 (random sample) | listing_id, date, comments, plus neighbourhood and room_type joined from listings |
+
+Reviews are English-filtered and 40 to 1,000 characters long. Prices are nightly asking prices in local currency.
 
 **Stack:** Python, Streamlit, Groq (`openai/gpt-oss-20b` for routing and summaries, `openai/gpt-oss-120b` for answers and code), `sentence-transformers` (all-MiniLM-L6-v2), ChromaDB, `rank_bm25`, pandas. No LangChain or other framework.
 
